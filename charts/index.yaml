@@ -1,9 +1,0 @@
-apiVersion: v1
-entries:
-  "":
-  - name: epinio
-    url: http://example.com/helm/repo/epinio-chart.tgz
-  - name: epinio
-    url: http://example.com/helm/repo/epinio-chart.tgz
-  - name: epinio
-    url: http://example.com/helm/repo/epinio-chart.tgz

@@ -1,3 +1,6 @@
+# IMPORTANT
+## This version of the code, need changes for the README because the file strucutre is different
+
 # Helm CLI
 
 Helm CLI is a command-line created in Golang  that will take as input a list of Helm Charts GitHub repo url or a local folder. i.e:
