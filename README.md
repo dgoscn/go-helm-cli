@@ -9,22 +9,30 @@ charts/chart) .
 
 The binary should behave in this manner.
 
-**Command** - <binary> add <chart-location>
+**1. First Action**
 
-**Result** - Adds the helm chart information to the CLI’s internal list and a storage of your choice.
+***Command*** - <binary> add <chart-location>
 
-**Command** - <binary> index
+***Result*** - Adds the helm chart information to the CLI’s internal list and a storage of your choice.
 
-**Result** – Generates Helm Repo Index file
+**2. Second Action**
 
-**Command** - <binary> install chart <chart-name>
+***Command*** - <binary> index
 
-Result - Installs the given helm chart in the current Kubernetes cluster. Installation of the helm chart
+***Result*** – Generates Helm Repo Index file
+
+**3. Third Action**
+
+***Command*** - <binary> install chart <chart-name>
+
+***Result*** - Installs the given helm chart in the current Kubernetes cluster. Installation of the helm chart
 must happen inside a Kubernetes pod.
 
-**Command** - <binary> images
+**4. Fourth Action**
 
-**Result** - Provides a list of all the container images used in all the charts added.
+***Command*** - <binary> images
+
+***Result*** - Provides a list of all the container images used in all the charts added.
 
 ## Prerequisites
 
