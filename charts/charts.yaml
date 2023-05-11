@@ -1,0 +1,6 @@
+charts:
+- https://github.com/epinio/helm-charts/tree/main/chart/epinio
+- https://github.com/epinio/helm-charts/tree/main/chart/epinio
+- https://github.com/epinio/helm-charts/tree/main/chart/epinio
+- test/chart
+- test/chart
