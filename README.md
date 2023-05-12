@@ -109,5 +109,7 @@ must happen inside a Kubernetes pod.
 You just need to go to the root file of the project and run the following command:
 
   ```bash
-   > go test
+   /home/go-helm-cli/cmd$ go test
+   /home/go-helm-cli/cmd$ go test . -v 
+   /home/go-helm-cli/cmd$ go test . -v -coverprofile cover.out
   ```

@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"gopkg.in/yaml.v2"
+
 )
 
 const (
@@ -29,6 +30,7 @@ func main() {
 	indexCmd := flag.NewFlagSet("index", flag.ExitOnError)
 	installCmd := flag.NewFlagSet("install", flag.ExitOnError)
 	imagesCmd := flag.NewFlagSet("images", flag.ExitOnError)
+	namespace := "default"
 
 	if len(os.Args) < 2 {
 		fmt.Println("Usage: <binary> <command> [args]")
@@ -65,7 +67,7 @@ func main() {
 			os.Exit(1)
 		}
 		chartName := args[0]
-		err := installChart(chartName)
+		err := installChart(chartName, namespace)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -144,32 +146,30 @@ func generateRepoIndex() error {
 	return nil
 }
 
-func installChart(chartName string) error {
-	chartList, err := loadChartList()
-	if err != nil {
-		return err
-	}
+func installChart(chartName, releaseName string) error {
+    // Construct the kubectl command
+    cmd := exec.Command("kubectl", "create", "namespace", releaseName)
+    cmd.Stdout = os.Stdout
+    cmd.Stderr = os.Stderr
 
-	var chartLocation string
-	for _, cl := range chartList.Charts {
-		if strings.Contains(cl, chartName) {
-			chartLocation = cl
-			break
-		}
-	}
+    // Run the kubectl command within the Docker container
+    if err := cmd.Run(); err != nil {
+        return fmt.Errorf("failed to create namespace: %w", err)
+    }
 
-	if chartLocation == "" {
-		return fmt.Errorf("chart '%s' not found", chartName)
-	}
+    // Construct the helm install command
+    cmd = exec.Command("helm", "install", chartName, "--namespace", releaseName)
+    cmd.Stdout = os.Stdout
+    cmd.Stderr = os.Stderr
 
-	cmd := exec.Command(kubectlCommand, "apply", "-f", filepath.Join(storageDir, chartLocation))
-	err = cmd.Run()
-	if err != nil {
-		return fmt.Errorf("failed to install chart: %s", err.Error())
-	}
+    // Run the helm install command within the Docker container
+    if err := cmd.Run(); err != nil {
+        return fmt.Errorf("failed to install chart: %w", err)
+    }
 
-	return nil
+    return nil
 }
+
 
 func getImageList() ([]string, error) {
 	chartList, err := loadChartList()

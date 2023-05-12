@@ -4,3 +4,7 @@ charts:
 - https://github.com/epinio/helm-charts/tree/main/chart/epinio
 - test/chart
 - test/chart
+- https://github.com/epinio/helm-charts.git
+- https://github.com/epinio/helm-charts.git
+- https://github.com/epinio/helm-charts.git
+- https://github.com/epinio/helm-charts/tree/main/chart/epinio

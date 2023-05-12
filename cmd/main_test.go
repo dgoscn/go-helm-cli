@@ -42,4 +42,35 @@ func TestAddChart(t *testing.T) {
 	if !found {
 		t.Errorf("Unexpected chart location. Expected: %s, Actual: %v", expectedChartLocation, chartList.Charts)
 	}
+
+	// Test adding multiple charts
+	expectedChartLocation2 := "test/chart2"
+	err = addChart(expectedChartLocation2)
+	if err != nil {
+		t.Errorf("Failed to add chart: %s", err)
+	}
+
+	chartList, err = loadChartList()
+	if err != nil {
+		t.Errorf("Failed to load chart list: %s", err)
+	}
+
+	found = false
+	for _, chartLocation := range chartList.Charts {
+		if chartLocation == expectedChartLocation2 {
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		t.Errorf("Unexpected chart location. Expected: %s, Actual: %v", expectedChartLocation2, chartList.Charts)
+	}
+
+	// Test adding a chart with an error
+	err = addChart("invalid-chart")
+	if err == nil {
+		t.Errorf("Expected an error but got nil")
+	}
+
 }
