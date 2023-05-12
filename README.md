@@ -39,6 +39,7 @@ must happen inside a Kubernetes pod.
 - Docker: Ensure that Docker is installed and running on your machine. **(optional)**
 - Kubernetes 1.27
 - Helm 3.7.0
+- Go 1.19
 
 ## Getting Started
 
