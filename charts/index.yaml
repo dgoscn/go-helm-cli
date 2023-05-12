@@ -17,3 +17,15 @@ entries:
     url: http://example.com/helm/repo/helm-charts.git-epinio.tgz
   - name: helm-charts.git
     url: http://example.com/helm/repo/helm-charts.git-epinio.tgz
+  - name: epinio
+    url: http://example.com/helm/repo/epinio-chart.tgz
+  - name: helm-charts.git
+    url: http://example.com/helm/repo/helm-charts.git-epinio.tgz
+  - name: helm-charts.git
+    url: http://example.com/helm/repo/helm-charts.git-epinio.tgz
+  - name: epinio
+    url: http://example.com/helm/repo/epinio-chart.tgz
+  - name: helm-charts.git
+    url: http://example.com/helm/repo/helm-charts.git-epinio.tgz
+  - name: epinio
+    url: http://example.com/helm/repo/epinio-chart.tgz

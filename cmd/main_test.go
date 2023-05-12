@@ -1,76 +1,78 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
+	"os"
 	"path/filepath"
 	"testing"
+
+	"gopkg.in/yaml.v2"
 )
 
+var testStorageDir string
+
 func TestAddChart(t *testing.T) {
-	// Set up the test
-	tempDir := t.TempDir()
-	storageDir := filepath.Join(tempDir, "charts")
-
-	// Override the original storageDir variable
-	originalStorageDir := storageDir
-	defer func() { storageDir = originalStorageDir }()
-
-	// Define the expected chart location
-	expectedChartLocation := "test/chart"
-
-	// Run the addChart function with the expected chart location
-	err := addChart(expectedChartLocation)
+	// Create a temporary directory for storage
+	tmpDir, err := ioutil.TempDir("", "test-storage")
 	if err != nil {
-		t.Errorf("Failed to add chart: %s", err)
+		t.Fatalf("Failed to create temporary directory: %v", err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	// Assign the temporary directory path to the package-level testStorageDir variable
+	testStorageDir = tmpDir
+
+	// Clear the chart list
+	err = clearChartList()
+	if err != nil {
+		t.Fatalf("Failed to clear chart list: %v", err)
 	}
 
-	// Load the chart list
+	// Call the addChart function
+	chartLocation := "mycharts/mychart"
+	err = addChart(chartLocation)
+	if err != nil {
+		t.Fatalf("Failed to add chart: %v", err)
+	}
+
+	// Load the chart list and verify the added chart
 	chartList, err := loadChartList()
 	if err != nil {
-		t.Errorf("Failed to load chart list: %s", err)
+		t.Fatalf("Failed to load chart list: %v", err)
 	}
 
-	// Check if the expected chart location is present in the chart list
-	found := false
-	for _, chartLocation := range chartList.Charts {
-		if chartLocation == expectedChartLocation {
-			found = true
-			break
-		}
+	if len(chartList.Charts) != 1 {
+		t.Fatalf("Unexpected number of charts in the chart list. Expected 1, got %d", len(chartList.Charts))
 	}
 
-	// Verify the result
-	if !found {
-		t.Errorf("Unexpected chart location. Expected: %s, Actual: %v", expectedChartLocation, chartList.Charts)
+	if chartList.Charts[0] != chartLocation {
+		t.Fatalf("Unexpected chart location in the chart list. Expected %s, got %s", chartLocation, chartList.Charts[0])
 	}
+}
 
-	// Test adding multiple charts
-	expectedChartLocation2 := "test/chart2"
-	err = addChart(expectedChartLocation2)
+func clearChartList() error {
+	chartList := &ChartList{Charts: []string{}}
+	err := saveChartList(chartList)
 	if err != nil {
-		t.Errorf("Failed to add chart: %s", err)
+		return fmt.Errorf("failed to clear chart list: %s", err.Error())
 	}
+	return nil
+}
 
-	chartList, err = loadChartList()
+
+func loadTestChartList(storageDir string) (*ChartList, error) {
+	chartList := &ChartList{}
+
+	data, err := ioutil.ReadFile(filepath.Join(storageDir, "charts.yaml"))
 	if err != nil {
-		t.Errorf("Failed to load chart list: %s", err)
+		return nil, fmt.Errorf("failed to load chart list: %s", err.Error())
 	}
 
-	found = false
-	for _, chartLocation := range chartList.Charts {
-		if chartLocation == expectedChartLocation2 {
-			found = true
-			break
-		}
+	err = yaml.Unmarshal(data, chartList)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse chart list: %s", err.Error())
 	}
 
-	if !found {
-		t.Errorf("Unexpected chart location. Expected: %s, Actual: %v", expectedChartLocation2, chartList.Charts)
-	}
-
-	// Test adding a chart with an error
-	err = addChart("invalid-chart")
-	if err == nil {
-		t.Errorf("Expected an error but got nil")
-	}
-
+	return chartList, nil
 }

@@ -36,9 +36,61 @@ must happen inside a Kubernetes pod.
 
 ## Prerequisites
 
-- Docker: Ensure that Docker is installed and running on your machine.
+- Docker: Ensure that Docker is installed and running on your machine. **(optional)**
+- Kubernetes 1.27
+- Helm 3.7.0
 
 ## Getting Started
+
+### There are two options to run this project.
+
+## First One - Local Kubernetes
+
+Run the project on your machine. For that, what you need it is only a **Kubernetes minimum version 1.27** and the **Helm minimum version 3.7.0.**
+
+Navigate through the files and get into the directory and check if the build of the project is in 
+
+```bash
+go-helm-cli$ file helm-cli 
+```
+Once validated, execute the following commands:
+
+```bash
+go-helm-cli$ ./helm-cli <command>
+```
+
+Replace <command> with one of the supported commands: add, index, install, or images. See the Usage section below for more details on each command.
+
+
+#### Local Kubernetes Usage 
+
+- **Add a Helm Chart:**
+
+  ```bash
+go-helm-cli$ ./helm-cli add https://github.com/epinio/helm-charts/tree/main/chart/epinio
+  ```
+
+- **Generate Repo Index:**
+
+  ```bash
+go-helm-cli$ ./helm-cli index
+  ```
+
+- **Install a Helm Chart:**
+
+  ```bash
+go-helm-cli$ ./helm-cli install chart epinio
+  ```
+
+- **List Container Images:**
+
+  ```bash
+ go-helm-cli$ ./helm-cli images
+  ```
+
+  This command provides a list of all the container images used in the charts added.
+
+### Second One - Docker
 
 1. Clone the repository:
 
@@ -61,7 +113,7 @@ must happen inside a Kubernetes pod.
 
    Replace `<command>` with one of the supported commands: `add`, `index`, `install`, or `images`. See the Usage section below for more details on each command.
 
-## Usage
+## Docker Usage
 
 - **Add a Helm Chart:**
 
@@ -71,7 +123,7 @@ must happen inside a Kubernetes pod.
   So, after filled:
 
   ```bash
-  docker run -it --rm -v ~/.kube/config:/root/.kube/config -v $(pwd)/charts:/app/charts helm-cli add https://github.com/epinio/helm-charts.git
+  docker run -it --rm -v ~/.kube/config:/root/.kube/config -v $(pwd)/charts:/app/charts helm-cli add https://github.com/epinio/helm-charts/tree/main/chart/epinio
   ```
 
   This command adds the Helm chart information from the specified `<chart-location>` to the CLI's internal list and stores it in the `charts` directory.
