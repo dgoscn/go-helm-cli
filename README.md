@@ -1,5 +1,5 @@
 # IMPORTANT
-## This version of the code, need changes for the README because the file strucutre is different
+## This version of the code, need changes for the README because the file strucutre is different and the code STILL INCOMPLETE
 
 # Helm CLI
 
