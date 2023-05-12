@@ -18,9 +18,9 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.18
-          
-      - name: Compile
-        run: mkdir -p build && go build -o build/test ./... 
+
+      - name: Build
+        run: go build -v -o build/laele ./...
 
       - name: Clean Build Output
         run: rm -rf build
