@@ -30,7 +30,7 @@ func main() {
 	indexCmd := flag.NewFlagSet("index", flag.ExitOnError)
 	installCmd := flag.NewFlagSet("install", flag.ExitOnError)
 	imagesCmd := flag.NewFlagSet("images", flag.ExitOnError)
-	namespace := "default"
+	namespace := "tenthousanddays"
 
 	if len(os.Args) < 2 {
 		fmt.Println("Usage: <binary> <command> [args]")
@@ -152,7 +152,7 @@ func installChart(chartName, releaseName string) error {
     cmd.Stdout = os.Stdout
     cmd.Stderr = os.Stderr
 
-    // Run the kubectl command within the Docker container
+    // Run the kubectl command within the Docker container - change this after
     if err := cmd.Run(); err != nil {
         return fmt.Errorf("failed to create namespace: %w", err)
     }
