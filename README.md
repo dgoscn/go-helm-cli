@@ -42,7 +42,7 @@ must happen inside a Kubernetes pod.
 
 ## Getting Started
 
-### There are two options to run this project.
+#### There are two options to run this project.
 
 ## First One - Local Kubernetes
 
@@ -59,38 +59,38 @@ Once validated, execute the following commands:
 go-helm-cli$ ./helm-cli <command>
 ```
 
-Replace <command> with one of the supported commands: add, index, install, or images. See the Usage section below for more details on each command.
+Replace <command> with one of the supported commands: **add**, **index**, **install**, or **images**. See the Usage section below for more details on each command.
 
 
-#### Local Kubernetes Usage 
+## Local Kubernetes Usage 
 
 - **Add a Helm Chart:**
 
   ```bash
-go-helm-cli$ ./helm-cli add https://github.com/epinio/helm-charts/tree/main/chart/epinio
+  go-helm-cli$ ./helm-cli add https://github.com/epinio/helm-charts/tree/main/chart/epinio
   ```
 
 - **Generate Repo Index:**
 
   ```bash
-go-helm-cli$ ./helm-cli index
+  go-helm-cli$ ./helm-cli index
   ```
 
 - **Install a Helm Chart:**
 
-  ```bash
-go-helm-cli$ ./helm-cli install chart epinio
-  ```
+    ```bash
+    go-helm-cli$ ./helm-cli install chart epinio
+    ```
 
 - **List Container Images:**
 
-  ```bash
- go-helm-cli$ ./helm-cli images
-  ```
+    ```bash
+    go-helm-cli$ ./helm-cli images
+    ```
 
   This command provides a list of all the container images used in the charts added.
 
-### Second One - Docker
+## Second One - Docker
 
 1. Clone the repository:
 
