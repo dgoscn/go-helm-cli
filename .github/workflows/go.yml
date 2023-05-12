@@ -19,5 +19,8 @@ jobs:
         with:
           go-version: 1.18
 
+      - name: Clean Build Output
+        run: rm -rf cmd
+
       - name: Run Tests
         run: go test -v ./...
