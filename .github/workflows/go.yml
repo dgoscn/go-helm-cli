@@ -19,11 +19,13 @@ jobs:
         with:
           go-version: 1.18
 
-      - name: Build
-        run: go build -v -o build/laele ./...
+      - name: Check if build output exists
+        run: test -d cmd
+        id: build_output_exists
 
-      - name: Clean Build Output
-        run: rm -rf build
+      - name: Build
+        if: ${{ !steps.build_output_exists.outputs.result }}
+        run: go build -v ./...
 
       - name: Run Tests
         run: go test -v ./...
