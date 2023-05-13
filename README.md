@@ -49,6 +49,13 @@ must happen inside a Kubernetes pod.
 
 Run the project on your machine. For that, what you need it is only a **Kubernetes minimum version 1.27** and the **Helm minimum version 3.7.0.**
 
+Clone the repository:
+
+```bash
+go-helm-cli$ git clone https://github.com/dgoscn/go-helm-cli.git
+```
+
+
 Navigate through the files and get into the directory and check if the build of the project is in 
 
 ```bash
@@ -93,26 +100,21 @@ Replace <command> with one of the supported commands: **add**, **index**, **inst
 
 ## Second One - Docker
 
-1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/<username>/helm-cli.git
-   ```
+Build the Docker image:
 
-2. Build the Docker image:
+```bash
+cd helm-cli
+docker build -t helm-cli .
+```
 
-   ```bash
-   cd helm-cli
-   docker build -t helm-cli .
-   ```
+Run the Helm CLI commands using Docker:
 
-3. Run the Helm CLI commands using Docker:
+```bash
+docker run -it --rm -v ~/.kube/config:/root/.kube/config -v $(pwd)/charts:/app/charts helm-cli <command>
+```
 
-   ```bash
-   docker run -it --rm -v ~/.kube/config:/root/.kube/config -v $(pwd)/charts:/app/charts helm-cli <command>
-   ```
-
-   Replace `<command>` with one of the supported commands: `add`, `index`, `install`, or `images`. See the Usage section below for more details on each command.
+Replace `<command>` with one of the supported commands: `add`, `index`, `install`, or `images`. See the Usage section below for more details on each command.
 
 ## Docker Usage
 
